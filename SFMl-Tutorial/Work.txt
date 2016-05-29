@@ -1,0 +1,3 @@
+I will make a drawing application using SFML2.3 and C++.
+I will do this small project to get used to the library and the C++ language.
+I will have simple classes to get used to how onjects work in C++.
