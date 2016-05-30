@@ -4,13 +4,14 @@
 EXE_DIR = .
 EXE = $(EXE_DIR)/main
 
-SRC= main.cpp Rectangle.cpp
+SRC= Rectangle.cpp main.cpp Game.cpp
 
 # generic build details
 
-CC=      g++
+CC=      gcc
 COPT=    -O
-CFLAGS=  -g -Wall
+CXXFLAGS=  -g -Wall -std=c++11
+LOADLIBES=  -lsfml-graphics -lsfml-window -lsfml-system -lstdc++
 #-Wpedantic - too much C++ comment style errors
 
 # compile to  object code
@@ -18,12 +19,12 @@ CFLAGS=  -g -Wall
 OBJ= $(SRC:.cpp=.o)
 
 .c.o:
-	$(CC) $(CFLAGS) $(COPT) -c -o $@ $< 
+	$(CC) $(COPT) -c -o $@ $< $(CFLAGS) 
 
 # build executable
 
 $(EXE): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(EXE) -lsfml-graphics -lsfml-window -lsfml-system
+	$(CC) $(CFLAGS) $(OBJ) -o $(EXE) $(LOADLIBES)
 
 # clean up compilation
 
@@ -33,5 +34,6 @@ clean:
 # dependencies
 
 #qtree:  main.o quadtree_functions.o 
-main.o:	main.cpp Rectangle.o
-Rectangle.o: Rectangle.cpp 
+main.o:	main.cpp 
+Rectangle.o: Rectangle.cpp Rectangle.hpp
+Game.o: Game.cpp Game.hpp
