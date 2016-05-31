@@ -23,6 +23,8 @@ class Game
 		void mouse();
 		Event event;
 		Movement m;
+		const int screenW = 840;
+		const int screenH = 600;
 };
 
 #endif

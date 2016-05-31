@@ -2,13 +2,15 @@
 
 Game::Game()
 {
-	window = new RenderWindow(VideoMode(840, 600), "Too Deep");
+	window = new RenderWindow(VideoMode(screenW, screenH), "Too Deep");
 
-	//window->setFramerateLimit(30);
+	window->setFramerateLimit(60);
 
-	shape = new Rectangle(425, 295, 0);
+	shape = new Rectangle((screenW / 2) - 5, (screenH / 2) - 5, 0);
 
 	window->clear(Color(255, 255, 255, 255));
+
+	window->setKeyRepeatEnabled(false);
 }
 
 Game::~Game()
@@ -34,6 +36,7 @@ void Game::colourRow()
 	for( int i = 0; i < 12; i++ )
 	{
 		Rectangle temp( x, 0, i);
+		temp.rec.setSize(Vector2f(70, 50));
 		window->draw(temp.rec);
 		x += 70;
 	}
@@ -41,66 +44,77 @@ void Game::colourRow()
 
 void Game::somethingHappened()
 {
-	window->pollEvent(event); 
-
-	if(event.type == Event::KeyPressed)
+	while (window->pollEvent(event))
 	{
-		//cout << "key prressed" ;
-		if(event.key.code == Keyboard::Left)
-		{
-			cout << " left key pressed \n";
-			m.left = true;	
-		}
-		else if(event.key.code == Keyboard::Right)
-		{
-			m.right = true;	
-		}
-		else if(Keyboard::Up)
-		{
-			m.up = true;	
-		}
-		else if(Keyboard::Down)
-		{
-			m.down = true;	
-		}
+	    // check the type of the event...
+	    switch (event.type)
+	    {
+	        // window closed
+	        case Event::Closed:
+	            window->close();
+	            break;
 
-		shape->move(m);
-	}
-	else if(event.type == Event::KeyReleased)
-	{
-		if(event.key.code == Keyboard::Left)
-		{
-			cout << "left key released \n";
-			m.left = false;	
-		}
-		else if(Keyboard::Right)
-		{
-			m.right = false;	
-		}
-		else if(Keyboard::Up)
-		{
-			m.up = false;	
-		}
-		else if(Keyboard::Down)
-		{
-			m.down = false;	
-		}
+	        // key pressed
+	        case Event::KeyPressed:
+	        {	
+            	if (Keyboard::isKeyPressed(Keyboard::Left))
+				{
+					m.left = true;	
+					m.right = false;
+				}
+				else if (Keyboard::isKeyPressed(Keyboard::Right))
+				{
+					m.right = true;	
+					m.left = false;
+				}
+				
+				if (Keyboard::isKeyPressed(Keyboard::Up))
+				{
+					m.up = true;	
+					m.down = false;
+				}
+				else if (Keyboard::isKeyPressed(Keyboard::Down))
+				{
+					m.down = true;	
+					m.up = false;
+				}
+	            break;
+	        }
 
-		shape->move(m);
-	}
-	else if(event.type == Event::MouseLeft)
-	{
-		if (Mouse::Left)
-		{
-			mouse();
-		}
+	        // key released 
+	        case Event::KeyReleased:
+	        {	
+            	if (event.key.code == Keyboard::Left)
+				{
+					m.left = false;	
+				}
+				else if (event.key.code == Keyboard::Right)
+				{
+					m.right = false;	
+				}
+				
+				if (event.key.code == Keyboard::Up)
+				{
+					m.up = false;	
+				}
+				else if (event.key.code == Keyboard::Down)
+				{
+					m.down = false;	
+				}
+	            break;
+	        }
 
+	        case Event::MouseButtonPressed:
+	        	if(event.mouseButton.button == Mouse::Left)
+	        	{
+		        	cout << "mouse left click\n";
+		        	mouse();
+		        	break;
+	        	}
+	    }
 	}
-	else if(event.type == sf::Event::Closed)
-	{
-		//cout << "Why\n" ;
-		//window->close();
-	}
+
+	shape->move(m, screenW, screenH);
 }
 
 bool Game::gameOn()
@@ -115,19 +129,19 @@ bool Game::gameOn()
 
 void Game::mouse()
 {
-	Vector2i localPosition = Mouse::getPosition();
+	int x = event.mouseButton.x;
+	int y = event.mouseButton.y;
 
-	int x = localPosition.x;
-	int y = localPosition.y;
-
-	if( x > 0 && y > 0 && x < 840 && y < 600 )
+	if( x > 0 && y > 0 && x < screenW && y < screenH )
 	{
 		int p = 70;
 		for( int i = 0; i < 12; i++ )
 			{
-				if( x < 70 )
+				if( x < p )
 				{
+					cout << i << " - color\n";
 					shape->changeColor(i);
+					break;
 				}
 				p += 70;
 			}

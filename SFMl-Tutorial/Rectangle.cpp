@@ -44,23 +44,25 @@ void Rectangle::changeColor(int c)
 	rec.setFillColor(recColor);
 }
 
-void Rectangle::move(Movement m)
+void Rectangle::move(Movement m, int SX, int SY)
 {
-	if(m.left)
+	if(m.left && x > 0)
 	{
 		x -= velocity;
 	}
-	else if(m.right)
+	else if(m.right && x < SX)
 	{
 		x += velocity;
 	}
 
-	if(m.up)
+	if(m.up && y > 50)
 	{
 		y -= velocity;
 	}
-	else if(m.down)
+	else if(m.down && y < SY)
 	{
 		y += velocity;
 	}
+
+	rec.setPosition(x, y);
 }

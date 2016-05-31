@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Struct.hpp"
+#include "iostream"
 
 using namespace sf;
 using namespace std;
@@ -15,7 +16,7 @@ class Rectangle
 		~Rectangle();
 		RectangleShape rec;
 		void changeColor(int c);
-		void move(Movement m);
+		void move(Movement m, int SX, int SY);
 	private:
 		int x;
 		int y;
@@ -35,7 +36,7 @@ class Rectangle
 			{20, 120, 15},    // dark-green
 			{135, 70, 10}     // brown
 		};
-		int velocity = 10;
+		int velocity = 2;
 };
 
 #endif
