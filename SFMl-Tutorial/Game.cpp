@@ -6,23 +6,30 @@ Game::Game()
 
 	window->setFramerateLimit(60);
 
+    // sets the rectangle shape on the middle of the screen
 	shape = new Rectangle((screenW / 2) - 5, (screenH / 2) - 5, 0);
 
+    // renders the clour of the screen white
 	window->clear(Color(255, 255, 255, 255));
 
+    // makes it so key presses are detected only once
 	window->setKeyRepeatEnabled(false);
 }
 
 Game::~Game()
 {
+    // clears allocated memory
 	delete window;
 	delete shape;
 }
 
 void Game::render()
-{
+{   
+    // I am not entierly sure what this does
+    // The game appears to work evven it is not included
 	window->setActive();
 
+    // renders the rectangle
 	window->draw(shape->rec);
 
 	colourRow();
@@ -32,9 +39,11 @@ void Game::render()
 
 void Game::colourRow()
 {
+    // loops through the array of colours and renders them on top of the screen
 	int x = 0;
 	for( int i = 0; i < 12; i++ )
 	{
+        // it creates a temporary rectangle that is used to display the colour row
 		Rectangle temp( x, 0, i);
 		temp.rec.setSize(Vector2f(70, 50));
 		window->draw(temp.rec);
@@ -42,6 +51,10 @@ void Game::colourRow()
 	}
 }
 
+/*
+Loops through all the events that had occured 
+The switch statemnt is used to do the accorrding action
+*/
 void Game::somethingHappened()
 {
 	while (window->pollEvent(event))
@@ -107,7 +120,6 @@ void Game::somethingHappened()
 	        case Event::MouseButtonPressed:
 	        	if(event.mouseButton.button == Mouse::Left)
 	        	{
-		        	cout << "mouse left click\n";
 		        	mouse();
 		        	break;
 	        	}
@@ -132,14 +144,17 @@ void Game::mouse()
 	int x = event.mouseButton.x;
 	int y = event.mouseButton.y;
 
-	if( x > 0 && y > 0 && x < screenW && y < screenH )
+    // checks if the user has clicked inside the colour row on top of the screen
+    // then it loops through all the colours using coordinates
+    // to find where the user has clicked and change the colour accordingly
+    // once the click has been found it changes the colour
+	if( x > 0 && y > 0 && x < screenW && y < 50 )
 	{
 		int p = 70;
 		for( int i = 0; i < 12; i++ )
 			{
 				if( x < p )
 				{
-					cout << i << " - color\n";
 					shape->changeColor(i);
 					break;
 				}

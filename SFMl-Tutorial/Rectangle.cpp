@@ -1,5 +1,6 @@
 #include "Rectangle.hpp"
 
+// sets the color and possition of the rrectangle on creation
 Rectangle::Rectangle(int Px, int Py, int c)
 {
 	x = Px;
@@ -10,11 +11,12 @@ Rectangle::Rectangle(int Px, int Py, int c)
 	recColor.b = color[c][2];
 	recColor.a = 255;
 
-	rec.setSize(Vector2f(10, 10));
+	rec.setSize(Vector2f(recH, recW));
 	rec.setFillColor(recColor);
 	rec.setPosition(x, y);
 }
 
+// sets the possition and gived black as defaoult colour
 Rectangle::Rectangle(int Px, int Py)
 {
 	x = Px;
@@ -32,7 +34,7 @@ Rectangle::Rectangle(int Px, int Py)
 
 Rectangle::~Rectangle()
 {
-	
+	// I am unsure if I need to clear any memory
 }
 
 void Rectangle::changeColor(int c)
@@ -44,13 +46,17 @@ void Rectangle::changeColor(int c)
 	rec.setFillColor(recColor);
 }
 
+/*
+Moves the rectangle based on the values of the Movement data type.
+It takes 2 integers to make sure to keep the rectangle inside the screen boundary. 
+*/
 void Rectangle::move(Movement m, int SX, int SY)
 {
 	if(m.left && x > 0)
 	{
 		x -= velocity;
 	}
-	else if(m.right && x < SX)
+	else if(m.right && x < SX - recW)
 	{
 		x += velocity;
 	}
@@ -59,7 +65,7 @@ void Rectangle::move(Movement m, int SX, int SY)
 	{
 		y -= velocity;
 	}
-	else if(m.down && y < SY)
+	else if(m.down && y < SY - recH)
 	{
 		y += velocity;
 	}
