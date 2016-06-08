@@ -8,9 +8,9 @@ SRC= main.cpp Node.cpp
 
 # generic build details
 
-CC=      gcc
+CXX=      g++
 COPT=    -O
-CXXFLAGS=  -g -Wall 
+CXXFLAGS=  -g -Wall -std=c++11
 LOADLIBES=  -lstdc++
 #-Wpedantic - too much C++ comment style errors
 
@@ -19,12 +19,12 @@ LOADLIBES=  -lstdc++
 OBJ= $(SRC:.cpp=.o)
 
 .c.o:
-	$(CC) $(COPT) -c -o $@ $< $(CFLAGS) 
+	$(CXX) $(COPT) -c $< $(CFLAGS) 
 
 # build executable
 
 $(EXE): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(EXE) $(LOADLIBES)
+	$(CXX) $(CFLAGS) $(OBJ) -o $(EXE) $(LOADLIBES)
 
 # clean up compilation
 
@@ -34,5 +34,5 @@ clean:
 # dependencies
 
 #qtree:  main.o quadtree_functions.o 
-main.o:	main.cpp 
+main.o: main.cpp Node.o
 Node.o: Node.cpp Node.hpp
