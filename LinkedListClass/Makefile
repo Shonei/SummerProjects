@@ -4,13 +4,13 @@
 EXE_DIR = .
 EXE = $(EXE_DIR)/main
 
-SRC= main.cpp 
+SRC= main.cpp Node.cpp
 
 # generic build details
 
 CC=      gcc
 COPT=    -O
-CXXFLAGS=  -g -Wall -std=c++11 -fpermissive
+CXXFLAGS=  -g -Wall 
 LOADLIBES=  -lstdc++
 #-Wpedantic - too much C++ comment style errors
 
@@ -34,5 +34,5 @@ clean:
 # dependencies
 
 #qtree:  main.o quadtree_functions.o 
-main.o:	main.cpp Node.hpp
-LinkedList.o: LinkedList.cpp LinkedList.hpp
+main.o:	main.cpp 
+Node.o: Node.cpp Node.hpp
