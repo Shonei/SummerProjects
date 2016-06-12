@@ -23,3 +23,19 @@ list class. I might come back at a later date and redo it ffrom the begining but
 at this point I wont be able to make something that will be usable in the future.
 I wanted a linked list class that I will be able to use alter on but this wont
 work as i want it. 
+
+12/06/2016
+I could leave it unfinished so I continueued working on the linked list. 
+At this point I have something that might be considered a list.
+Howevver there are many things i dont understand. 
+
+I dont know why the print functioons in the linked list dont print the head 
+and tail. The same goes for the length method as well. 
+
+I will leave  it be for now and revisit it later once i get proffesional help.
+
+The idea is that I provide some of the basic methods in the linked  list 
+and then with inheritence other methods can be added. also if A different node
+class is used it should not break the linked list. However that is not true 
+for now because the linked list class I am using doesnt offer a default constructor.
+So the constructur will have to be changed in the future. 

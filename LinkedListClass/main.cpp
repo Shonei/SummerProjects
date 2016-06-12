@@ -1,22 +1,29 @@
 #include "Node.hpp"
-#include "Node.cpp"
+#include "LinkedList.hpp"
 
 int main()
 {
-    Node<int, int> *first = new Node<int, int>(1, 2);
-    Node<int, int> *second = new Node<int, int>(13, 23);
-    Node<int, int> *third = new Node<int, int>(1235, 234);
-    Node<int, int> *forth = new Node<int, int>(123, 4544);
-    // first->printNode();
-    // first->changeValue(30);
+    LinkedList test;
 
-    first->addBefore(second);
-    first->getPrev()->printNode();
-    
+    Node *f = new Node(1, "hello");
+    Node *s = new Node(2, "there");
+    Node *v = new Node(3, "!");
+
+    test.add(f);
+
+    test.add(s);
+
+    test.add(v);
+
+    test.remove(1);
+
+    test.printList();
+
+    std::cout << test.length() << std::endl;
+
+    f->next->printNode();
+    test.tail->prev->printNode();
+
     return 0;
-    /*
-    this method might have to be removed
-    first->remove();
-    */
 }
 

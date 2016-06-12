@@ -4,7 +4,7 @@
 EXE_DIR = .
 EXE = $(EXE_DIR)/main
 
-SRC= main.cpp Node.cpp
+SRC= main.cpp Node.cpp LinkedList.cpp
 
 # generic build details
 
@@ -36,3 +36,4 @@ clean:
 #qtree:  main.o quadtree_functions.o 
 main.o: main.cpp Node.o
 Node.o: Node.cpp Node.hpp
+LinkedList.o: LinkedList.cpp LinkedList.hpp
