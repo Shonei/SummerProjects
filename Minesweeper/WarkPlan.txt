@@ -1,0 +1,11 @@
+I will be using inheritance to re use the rectngle and game class from 
+my  SFML project. There is hardly any benefit to me doing that. however i want
+to have some more practice with inheritance before I actualy do bigger 
+projects for school or work.
+
+18/06/2016
+After some more thpught I decided to not use inheritance as there will
+be no benefit so i am making everything from scratch. 
+At this point I have a Block class that will repesent all the mines in
+the game. 
+It still needs to be tested.
