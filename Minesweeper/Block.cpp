@@ -18,7 +18,7 @@ Block::Block()
     updateSprite();
 }
 
-Block::Block(sf::Texture t, sf::Vector2f p)
+Block::Block(sf::Texture& t, sf::Vector2f& p)
 {
     // this needs to be tested
     texture = &t;
@@ -52,28 +52,28 @@ void Block::updateSprite()
     sprite->scale(scale);
 }
 
-void Block::setPossition(sf::Vector2f p)
+void Block::setPossition(sf::Vector2f& p)
 {
     possition = p;
 
     sprite->setPosition(possition);
 }
 
-void Block::setTexture(sf::Texture t)
+void Block::setTexture(sf::Texture& t)
 {
     texture = &t;
 
     sprite->setTexture(*texture);
 }
 
-void Block::setTexturePos(sf::Vector2i p)
+void Block::setTexturePos(sf::Vector2i& p)
 {
     spritePos = p;
 
     sprite->setTextureRect(sf::IntRect(spritePos, size));
 }
 
-void Block::setSize(sf::Vector2i f)
+void Block::setSize(sf::Vector2i& f)
 {
     size = f;
 
