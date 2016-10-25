@@ -4,14 +4,14 @@
 EXE_DIR = .
 EXE = $(EXE_DIR)/main
 
-SRC= Block.cpp main.cpp MineGame.cpp
+SRC= Block.cpp main.cpp Game.cpp
 
 # generic build details
 
 CXX=      g++
 COPT=    -O
 CXXFLAGS=  -g -Wall -std=c++11
-LOADLIBES=  -lstdc++
+LOADLIBES=  -lsfml-graphics -lsfml-window -lsfml-system -lstdc++
 #-Wpedantic - too much C++ comment style errors
 
 # compile to  object code
@@ -33,8 +33,8 @@ clean:
 
 # dependencies
 
-#qtree:  main.o quadtree_functions.o 
-main.o:  Block.hpp MineGame.hpp
-Block.o: Block.cpp Block.hpp
-MineGame.o: MineGame.cpp MineGame.hpp
+#main: main.o Block.o Game.o
+main.o:  Game.o Game.hpp
+#Game.o: Block.o Game.cpp Graphics.hpp
+Block.o: Block.hpp Block.cpp
 
