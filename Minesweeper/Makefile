@@ -34,7 +34,7 @@ clean:
 # dependencies
 
 #main: main.o Block.o Game.o
-main.o:  Game.o Game.hpp
-#Game.o: Block.o Game.cpp Graphics.hpp
+main.o:  Game.o Block.o
+Game.o: Game.cpp Game.hpp
 Block.o: Block.hpp Block.cpp
 
