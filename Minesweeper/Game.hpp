@@ -10,16 +10,17 @@ class Game
 	public:
 		Game();
 		Game(float t = 1.0, 
-			 int size = 25, 
+			 int h = 5,
+			 int w = 5, 
 			 int mines = 5, 
-			 std::string name("images/blocks.png"));
+			 std::string name = "");
 		~Game();
 		std::vector<Block> grid;
 		float scale = 1.0;
 		sf::Texture texture;
-		void resizeGrid(int size,int mines);	
-		sf::Sprite getSprite(int i);
-		void mouseClick(sf:Vector2i t);
+		void resizeGrid(int h, int w,int mines, float scale);	
+		int getGridSize();
+		void mouseClick(sf::Vector2i t);
 
 };
 

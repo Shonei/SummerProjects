@@ -5,7 +5,7 @@ Block::Block()
     // to be continue
 }
 
-Block::Block(sf::Texture& t, sf::Vector2f p, bool x, sf::IntRect r)
+Block::Block(sf::Texture& t, sf::Vector2f p, bool x, sf::IntRect r, float s)
 {
     mine = x;
 
@@ -17,7 +17,7 @@ Block::Block(sf::Texture& t, sf::Vector2f p, bool x, sf::IntRect r)
 
     sprite.setPosition(p);
 
-    sprite.setScale(0.5f, 0.5f);
+    sprite.setScale(s, s);
 
 }
 
