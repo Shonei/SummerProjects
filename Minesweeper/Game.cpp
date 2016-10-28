@@ -15,23 +15,23 @@ Game::Game(float t,
 	}
 
 	resizeGrid(h, w, mines, scale);
-
 }
 
 void Game::resizeGrid(int h, int w, int mines, float s)
 {
 	scale  = s;
 
+	// clear grid to be sure and set the new size
 	grid.clear();
 
 	grid.resize(h*w);
 
 	sf::Vector2f f(0, 0);
 
-	// the next for loop might need < instead of <=
+	// creates the grid 
 	for(int i = 1; i <= h*w ; i++ )
 	{
-		grid[i-1] = Block(texture, f, false, sf::IntRect(105, 105, 104, 104), scale);
+		grid[i-1] = Block(texture, f, false, scale);
 
 		f.x += 105*scale;
 		if(i % w == 0)
@@ -40,6 +40,8 @@ void Game::resizeGrid(int h, int w, int mines, float s)
 			f.y += 105*scale;
 		}
 	}
+
+	// puts mines in random blocks
 	// Seed with a real random value, if available
     std::random_device r;
  
@@ -50,22 +52,19 @@ void Game::resizeGrid(int h, int w, int mines, float s)
 	for(int i = 0; i < mines; i++)
 	{
 		int rand = uniform_dist(e1);
+
 		grid[rand].mine = true;
+
+		grid[rand+1].nearMines += 1;
+		grid[rand-1].nearMines += 1;
+
+		// should change the mines count value of block next to a mine 
 		for (int i = -1; i < 2; ++i)
 		{
-			grid[rand+i+6].nearMines += 1;
-			grid[rand+i-6].nearMines += 1;
+			grid[rand+i+w].nearMines += 1;
+			grid[rand+i-w].nearMines += 1;
 		}
 	}
-
-	// for (int i = 0; i < h*w; ++i)
-	// {
-	// 	if(grid[i].nearMines != 0)
-	// 	{
-	// 		grid[i].setSpriteRect(sf::IntRect(0, 105*grid[i].nearMines, 
-	// 											104, 104));
-	// 	}
-	// }
 }
 
 int Game::getGridSize()
@@ -80,14 +79,22 @@ void Game::mouseClick(sf::Vector2f t)
 		sf::FloatRect temp = grid[i].sprite.getGlobalBounds();
 		if(temp.contains(t))
 		{
-			grid[i].setSpriteRect(sf::IntRect(0, 0 , 104, 104));
+			if(!grid[i].mine)
+			{			
+				if( grid[i].nearMines > 0 )
+				{
+					grid[i].setSpriteRect(sf::IntRect((grid[i].nearMines-1)*105, 0, 104, 104));
+				}
+				else
+				{
+					grid[i].setSpriteRect(sf::IntRect(0, 105, 104, 104));
+				}
+			}
+			else
+			{
+				grid[i].setSpriteRect(sf::IntRect(315, 105, 104, 104));
+			}
 		}
-
-		// sf::IntRect temp;
-		// if(temp.intersects(grid[i].sprite.getGlobalBounds(), t))
-		// {
-		// 	grid[i].setSpriteRect(sf::IntRect(0, 0 , 104, 104));
-		// }
 	}
 }
 

@@ -5,22 +5,18 @@ Block::Block()
     // to be continue
 }
 
-Block::Block(sf::Texture& t, sf::Vector2f p, bool x, sf::IntRect r, float s)
+Block::Block(sf::Texture& t, sf::Vector2f p, bool x, float s)
 {
     mine = x;
 
     sprite.setTexture(t);
 
-    sprite.setTextureRect(r);
+    // the rect below gives a set texture for all blocks
+    sprite.setTextureRect(sf::IntRect(105, 105, 104, 104));
 
     sprite.setPosition(p);
 
     sprite.setScale(s, s);
-
-    rect.top = p.y;
-    rect.left = p.x;
-    rect.width = r.width*s;
-    rect.height = r.height*s;
 
 }
 

@@ -2,8 +2,8 @@
 #include "Game.hpp"
 #include "vector"
 #include "iostream"
-int hight = 2;
-int width = 2;
+int hight = 6;
+int width = 6;
 sf::View view;
 
 int main(int argc, char const *argv[])
@@ -13,20 +13,13 @@ int main(int argc, char const *argv[])
 	window.setKeyRepeatEnabled(false);
 	window.setFramerateLimit(30);
 
-    Game game(0.2, hight, width, 3, "images/blocks.png");
+    Game game(0.2, hight, width, 5, "images/blocks.png");
 
-    // ajustes the view to my window to fir the grid
+    // ajustes the view to my window to fit the grid
     view.reset(sf::FloatRect(0, 0, width*105*game.scale, hight*105*game.scale));
     window.setSize(sf::Vector2u(width*105*game.scale, hight*105*game.scale));
 
     window.setView(view);
-
-    for (int i = 0; i < game.getGridSize(); ++i)
-    {
-    	std::cout << i << std::endl;
-    	std::cout << game.grid[i].rect.left << std::endl;
-    	std::cout << game.grid[i].rect.top << std::endl;
-    }
 
     while(window.isOpen())
     {
@@ -44,8 +37,8 @@ int main(int argc, char const *argv[])
 	        {
 	        	if (event.mouseButton.button == sf::Mouse::Left)
 	        	{
-	        		game.mouseClick(sf::Mouse::getPosition(window));
-	        		std::cout << event.mouseButton.x << event.mouseButton.y << std::endl;
+	        		game.mouseClick(sf::Vector2f(event.mouseButton.x,
+	        									 event.mouseButton.y));
 	        	}
 	        }
 	    }
