@@ -31,7 +31,7 @@ void Game::resizeGrid(int h, int w, int mines, float s)
 	// the next for loop might need < instead of <=
 	for(int i = 1; i <= h*w ; i++ )
 	{
-		grid[i-1] = Block(texture, f, false, sf::IntRect(0, 105, 103, 104), scale);
+		grid[i-1] = Block(texture, f, false, sf::IntRect(105, 105, 104, 104), scale);
 
 		f.x += 105*scale;
 		if(i % w == 0)
@@ -40,6 +40,32 @@ void Game::resizeGrid(int h, int w, int mines, float s)
 			f.y += 105*scale;
 		}
 	}
+	// Seed with a real random value, if available
+    std::random_device r;
+ 
+    // Choose a random mean between 1 and 6
+    std::default_random_engine e1(r());
+    std::uniform_int_distribution<int> uniform_dist(0, h*w);
+
+	for(int i = 0; i < mines; i++)
+	{
+		int rand = uniform_dist(e1);
+		grid[rand].mine = true;
+		for (int i = -1; i < 2; ++i)
+		{
+			grid[rand+i+6].nearMines += 1;
+			grid[rand+i-6].nearMines += 1;
+		}
+	}
+
+	// for (int i = 0; i < h*w; ++i)
+	// {
+	// 	if(grid[i].nearMines != 0)
+	// 	{
+	// 		grid[i].setSpriteRect(sf::IntRect(0, 105*grid[i].nearMines, 
+	// 											104, 104));
+	// 	}
+	// }
 }
 
 int Game::getGridSize()
@@ -47,15 +73,29 @@ int Game::getGridSize()
 	return grid.size();
 }
 
-void Game::mouseClick(sf::Vector2i t)
+void Game::mouseClick(sf::Vector2f t)
 {
 	for (int i = 0; i < grid.size(); i++)
 	{
-		if(grid[i].rect.contains(t))
+		sf::FloatRect temp = grid[i].sprite.getGlobalBounds();
+		if(temp.contains(t))
 		{
-			// change sprite to reveal the name
+			grid[i].setSpriteRect(sf::IntRect(0, 0 , 104, 104));
 		}
+
+		// sf::IntRect temp;
+		// if(temp.intersects(grid[i].sprite.getGlobalBounds(), t))
+		// {
+		// 	grid[i].setSpriteRect(sf::IntRect(0, 0 , 104, 104));
+		// }
 	}
+}
+
+// still not sure where this will go
+// or what parameters it will take
+void Game::updateGridTexture()
+{
+
 }
 
 Game::~Game()

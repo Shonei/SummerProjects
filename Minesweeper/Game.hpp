@@ -4,6 +4,9 @@
 #include "vector"
 #include "Block.hpp"
 #include "string"
+#include "ctime"
+#include "random"
+#include "iostream"
 
 class Game
 {
@@ -20,7 +23,8 @@ class Game
 		sf::Texture texture;
 		void resizeGrid(int h, int w,int mines, float scale);	
 		int getGridSize();
-		void mouseClick(sf::Vector2i t);
+		void mouseClick(sf::Vector2f t);
+		void updateGridTexture();
 
 };
 
