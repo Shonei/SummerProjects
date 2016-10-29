@@ -72,7 +72,7 @@ int Game::getGridSize()
 	return grid.size();
 }
 
-void Game::mouseClick(sf::Vector2f t)
+void Game::mouseClick(sf::Vector2f t, bool& l)
 {
 	for (int i = 0; i < grid.size(); i++)
 	{
@@ -92,6 +92,7 @@ void Game::mouseClick(sf::Vector2f t)
 			}
 			else
 			{
+				l = true;
 				grid[i].setSpriteRect(sf::IntRect(315, 105, 104, 104));
 			}
 		}

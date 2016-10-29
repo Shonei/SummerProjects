@@ -1,39 +1,37 @@
-	// test the vector of blocks 
+#include <SFML/Graphics.hpp>
 
-	sf::Texture texture;
-	texture.loadFromFile("images/blocks.png");
-
-	std::vector<Block> grid;
-	grid.resize(9);
-	sf::Vector2f f(0, 0);
-	int k = 0;
-	for(int i = 0; i < 8; i++ )
-	{
-		grid[i] = Block(texture, f, true, sf::IntRect(k, 0, 103, 104));
-		k += 105;
-		f.y += 105*0.5;
-	}
-
+int main(int argc, char const *argv[])
+{
 	sf::RenderWindow window(sf::VideoMode(400, 600), "Minesweeper");
+	sf::Texture t;
+	t.loadFromFile("images/0.jpg");
+	sf::Sprite s(t);
 
-	while (window.isOpen())
-	{
-	   // Event processing
-	   sf::Event event;
-	   while (window.pollEvent(event))
-	   {
-	       // Request for closing the window
-	       if (event.type == sf::Event::Closed)
-	           window.close();
-	   }
+	s.setScale(400 / s.getGlobalBounds().width, 600 / s.getGlobalBounds().height);
 
-	   	window.clear(sf::Color(0, 0, 0, 255));
-	   	for(int i = 0; i < 9; i++ )
-		{
-			window.draw(grid[i].sprite);
-		}
+    while(window.isOpen())
+    {
+    	// Event processing
+	    sf::Event event;
+	    while (window.pollEvent(event))
+	    {
+	        // Request for closing the window
+	        if (event.type == sf::Event::Closed)
+	        {
+	        	window.close();
+	        }
+	    }
+
+	    //handels screen rendering dont mess with for now
+	    // set backgound colour 
+	    window.clear(sf::Color(0, 0, 0, 255));
+
+			window.draw(s);
+		
 
 		window.display();
-	}
 
-	window.close();
+    }
+
+	return 0;
+}

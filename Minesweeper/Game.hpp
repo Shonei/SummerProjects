@@ -23,7 +23,7 @@ class Game
 		sf::Texture texture;
 		void resizeGrid(int h, int w,int mines, float scale);	
 		int getGridSize();
-		void mouseClick(sf::Vector2f t);
+		void mouseClick(sf::Vector2f t, bool& l);
 		void updateGridTexture();
 
 };
