@@ -2,6 +2,9 @@
 
 Block::Block()
 {
+    // I have yeat to implement the default constructor
+    // if anyone ever re uses this code please implement it to m
+    // match what you need
     // to be continue
 }
 
@@ -25,6 +28,7 @@ Block::~Block()
     
 }
 
+// avoid me having to use onject.sprite.setTextureRect()
 void Block::setSpriteRect(sf::IntRect r)
 {
     sprite.setTextureRect(r);

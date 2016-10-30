@@ -1,3 +1,15 @@
+/*
+	This is biggest part of the game that needs changes.
+	To be fair deleting it and starting anew will be best.
+
+	Right now it holds that window and game onject as well
+	as the game and event loops.
+
+	I am considering af creating a main object and having methods to futher 
+	seperate the code to make it easier to understand.
+*/
+
+
 #include "Block.hpp"
 #include "Game.hpp"
 #include "vector"

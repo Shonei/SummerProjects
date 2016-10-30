@@ -1,3 +1,13 @@
+/*
+    Header file to represent a block from the game minesweeper.
+    It will contain the sprite, whether or not it is a mine
+    or how many mines are near it.
+    the setSpriteRect method is just to make changing the possition on 
+    the sprite easier.
+*/
+
+
+
 #pragma once
 
 #include <SFML/Graphics.hpp>

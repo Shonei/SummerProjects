@@ -1,3 +1,12 @@
+/*
+	Definition of a game class that will handle creating the grid.
+	I should have named it grid as it only hold the grid of blocks.
+	It has 4 methods. 
+	resizeGrid is used for both craeting the grid initialy 
+	and later on to change it if needed.
+	mouseClick handles mouse input.
+*/
+
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -24,14 +33,5 @@ class Game
 		void resizeGrid(int h, int w,int mines, float scale);	
 		int getGridSize();
 		void mouseClick(sf::Vector2f t, bool& l);
-		void updateGridTexture();
 
 };
-
-// remember to switch repeat buttons off
-// dont forget to check if a button is pressed before hand
-// will get mouse position for the screen to be used in colition
-// sf::Vector2i localPosition = sf::Mouse::getPosition(window);
-
-// this is how I will do colition
-// sprite.rect.contains(sf::Vector2i t)
