@@ -61,6 +61,9 @@ void Game::resizeGrid(int h, int w, int mines, float s)
 		/*
 			fror my tests the next part of the method does not work.
 			I will have to change it or better complete re do it.
+
+			It goes over the next line of a mine is at a corner of a grid
+			same problem for the future reveal grid function
 		*/
 
 		// updates the nearMines values to  the blocks that 
