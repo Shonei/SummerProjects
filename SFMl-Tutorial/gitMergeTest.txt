@@ -1,12 +1,22 @@
 sfhdfhd
 dfhdfhgh
 dgjfgj
+<<<<<<< HEAD
 dhjh sdgfgdfg
 fgjfg ssdgsdg
+=======
+dhjh  dfgdfg
+fgjfg
+>>>>>>> efa2c4b33e5480496767c46a9ed33d5af2f60f8a
 jfgj
+fgj  dfgfdgdfg
 fgj
-fgj
+<<<<<<< HEAD
 fg  sgdfg 
 jf
+=======
+fg
+jf  dfgdfgdfg
+>>>>>>> efa2c4b33e5480496767c46a9ed33d5af2f60f8a
 gj
 fgj
