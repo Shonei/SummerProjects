@@ -1,9 +1,9 @@
 /*
-	This is biggest part of the game that needs changes.
+	This is biggest part of the grid that needs changes.
 	To be fair deleting it and starting anew will be best.
 
-	Right now it holds that window and game onject as well
-	as the game and event loops.
+	Right now it holds that window and grid onject as well
+	as the grid and event loops.
 
 	I am considering af creating a main object and having methods to futher 
 	seperate the code to make it easier to understand.
@@ -11,7 +11,7 @@
 
 
 #include "Block.hpp"
-#include "Game.hpp"
+#include "Grid.hpp"
 #include "vector"
 #include "iostream"
 #include "string"
@@ -30,11 +30,11 @@ int main(int argc, char const *argv[])
 	window.setKeyRepeatEnabled(false);
 	window.setFramerateLimit(30);
 
-    Game game(0.2, hight, width, 5, "images/blocks.png");
+    Grid grid(0.2, hight, width, 5, "images/blocks.png");
 
     // ajustes the view to my window to fit the grid
-    view.reset(sf::FloatRect(0, 0, width*105*game.scale, hight*105*game.scale));
-    window.setSize(sf::Vector2u(width*105*game.scale, hight*105*game.scale));
+    view.reset(sf::FloatRect(0, 0, width*105*grid.scale, hight*105*grid.scale));
+    window.setSize(sf::Vector2u(width*105*grid.scale, hight*105*grid.scale));
 
     window.setView(view);
 
@@ -54,7 +54,7 @@ int main(int argc, char const *argv[])
 	        {
 	        	if (event.mouseButton.button == sf::Mouse::Left)
 	        	{
-	        		game.mouseClick(sf::Vector2f(event.mouseButton.x,
+	        		grid.mouseClick(sf::Vector2f(event.mouseButton.x,
 	        									 event.mouseButton.y), loose);
 	        	}
 	        }
@@ -64,16 +64,16 @@ int main(int argc, char const *argv[])
 	    // set backgound colour 
 	    window.clear(sf::Color(0, 0, 0, 255));
 
-	   	for(int i = 0; i < game.getGridSize(); i++ )
+	   	for(int i = 0; i < grid.getGridSize(); i++ )
 		{
-			window.draw(game.grid[i].sprite);
+			window.draw(grid.grid[i].sprite);
 		}
 
 		window.display();
 
 		if(loose)
 		{
-			loosingLoop(window);
+			//loosingLoop(window);
 		}
     }
 
