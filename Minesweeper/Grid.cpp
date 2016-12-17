@@ -43,37 +43,7 @@ void Grid::resizeGrid(GridInfo &info)
 		}
 	}
 
-	// puts mines in randomom blocks
-    std::random_device r;
-    std::default_random_engine e1(r());
-    std::uniform_int_distribution<int> uniform_dist(0, info.hight*info.width);
-
-	for(int i = 0; i < info.mines; i++)
-	{
-		int random = uniform_dist(e1);
-
-		grid[random].mine = true;
-
-		/*
-			from my tests the next part of the method does not work.
-			I will have to change it or better complete re do it.
-
-			It goes over the next line of a mine is at a corner of a grid
-			same problem for the future reveal grid function
-		*/
-
-		// updates the nearMines values to  the blocks that 
-		// are next to mines 
-		grid[random+1].nearMines += 1;
-		grid[random-1].nearMines += 1;
-
-		// should change the mines count value of block next to a mine 
-		for (int i = -1; i <= 1; ++i)
-		{
-			grid[random+i+info.width].nearMines += 1;
-			grid[random+i-info.width].nearMines += 1;
-		}
-	}
+	putMines(info);
 }
 
 int Grid::getGridSize()
@@ -95,7 +65,6 @@ void Grid::mouseClick(sf::Vector2f t, bool l)
 		sf::FloatRect temp = grid[i].sprite.getGlobalBounds();
 		if(temp.contains(t))
 		{
-			grid[i].opened = true;
 			if(!grid[i].mine)
 			{		
 				// if there are mines near it it will change the texture rect
@@ -137,4 +106,93 @@ void Grid::mouseRightClick(sf::Vector2f t)
 Grid::~Grid()
 {
 	grid.clear();
+}
+
+void Grid::putMines(GridInfo &info)
+{
+	// puts mines in randomom blocks
+    std::random_device r;
+    std::default_random_engine e1(r());
+    std::uniform_int_distribution<int> uniform_dist(0, info.hight*info.width);
+
+	for(int i = 0; i < info.mines; i++)
+	{
+		int random = uniform_dist(e1);
+
+		grid[random].mine = true;
+
+		/*
+			from my tests the next part of the method does not work.
+			I will have to change it or better complete re do it.
+
+			It goes over the next line of a mine is at a corner of a grid
+			same problem for the future reveal grid function
+		*/
+
+		if(random < info.width)
+		{
+			grid[random+info.width].nearMines += 1;
+			
+			thinkOfABetterName(info.width, random);
+		}
+		else if(random > grid.size()-info.width)
+		{
+			grid[random-info.width].nearMines += 1;
+
+			thinkOfABetterName(-info.width, random);
+		}
+		else
+		{
+			grid[random+info.width].nearMines += 1;
+			grid[random-info.width].nearMines += 1;
+
+			int temp = 0;
+
+			if(random % info.width == 0)
+			{
+				temp = 1;
+			}
+			else if(random+1 % info.width == 0)
+			{
+				temp = -1;
+			}
+			
+			if(random % info.width != 0 && random+1 % info.width != 0)
+			{
+				temp = 1;
+				
+				grid[random-1].nearMines += 1;
+				grid[random-info.width+1].nearMines += 1;
+				grid[random+info.width-1].nearMines += 1;
+			}
+
+			grid[random+temp].nearMines += 1;
+			grid[random+info.width+temp].nearMines += 1;
+			grid[random-info.width+temp].nearMines += 1;
+		}
+
+	}	
+}
+
+void Grid::thinkOfABetterName(int t, int random)
+{
+	if(random % t == 0)
+	{
+		grid[random+1].nearMines += 1;
+		grid[random+t+1].nearMines += 1;
+	}
+	
+	if(random+1 % t == 0)
+	{
+		grid[random-1].nearMines += 1;
+		grid[random+t-1].nearMines += 1;
+	}
+	
+	if(random % t != 0 && random+1 % t != 0)
+	{
+		grid[random+1].nearMines += 1;
+		grid[random+t+1].nearMines += 1;
+		grid[random-1].nearMines += 1;
+		grid[random+t-1].nearMines += 1;
+	}
 }

@@ -40,5 +40,8 @@ class Grid
 		int getGridSize(); 
 		void mouseClick(sf::Vector2f t, bool l);
 		void mouseRightClick(sf::Vector2f t);
+	private:
+		void putMines(GridInfo &info);
+		void thinkOfABetterName(int t, int random);
 
 };
