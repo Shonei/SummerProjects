@@ -15,11 +15,13 @@ Block::Block(sf::Texture& t, sf::Vector2f p, bool x, float s)
     sprite.setTexture(t);
 
     // the rect below gives a set texture for all blocks
-    sprite.setTextureRect(sf::IntRect(105, 105, 104, 104));
+    sprite.setTextureRect(sf::IntRect(textSize, textSize, 104, 104));
 
     sprite.setPosition(p);
 
     sprite.setScale(s, s);
+
+    opened = false;
 
 }
 

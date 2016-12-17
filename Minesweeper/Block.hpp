@@ -21,5 +21,7 @@ public:
     void setSpriteRect(sf::IntRect r);
     int nearMines = 0;
     bool mine;
+    bool opened;
     sf::Sprite sprite;
+    static constexpr int textSize = 105;
 };

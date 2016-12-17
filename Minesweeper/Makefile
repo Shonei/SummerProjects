@@ -33,9 +33,8 @@ clean:
 
 # dependencies
 
-#main: main.o Block.o Game.o
-main.o:  Grid.o Block.o Game.o
+main.o: main.hpp
 Game.o: Game.cpp Game.hpp
-Game.o: Grid.cpp Grid.hpp
+Grid.o: Grid.cpp Grid.hpp
 Block.o: Block.hpp Block.cpp
 

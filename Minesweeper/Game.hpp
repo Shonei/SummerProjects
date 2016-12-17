@@ -6,11 +6,14 @@
 class Game
 {
 public:
-	Game();
+	Game(int h, int w, int m);
 	~Game();
-	void changeView(); const
-	void eventHandler(const sf::Event event); const 
-	void draw(sf::Window window); const
-	Grid grid;
+	void eventHandler(const sf::Event &event);
+	void draw(sf::RenderWindow &window) const; 
+	bool gameLoose() const;
+	sf::Vector2f getViewSize() const;
+	Grid *grid;
+	GridInfo gridInfo;
+	bool loose;
 	
 };

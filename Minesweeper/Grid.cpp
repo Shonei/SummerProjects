@@ -1,65 +1,61 @@
 #include "Grid.hpp"
 
-Grid::Grid(float t, 
-			int h,
-			int w, 
-			int mines, 
-			std::string name)
+Grid::Grid(GridInfo &info)
 {
-	scale = t;
-	if(!texture.loadFromFile(name))
+	scale = info.scale;
+	if(!texture.loadFromFile(info.texture))
 	{
 		sf::err();
 		// probably close the file at this point
 		// or try to fix the error
 	}
 
-	resizeGrid(h, w, mines, scale);
+	resizeGrid(info);
 }
 
-void Grid::resizeGrid(int h, int w, int mines, float s)
+void Grid::resizeGrid(GridInfo &info)
 {
-	scale  = s;
+	scale  = info.scale;
 
 	// clear grid to be sure and set the new size
 	grid.clear();
 
 	// set new size according to the height and width 
-	grid.resize(h*w);
+	grid.resize(info.width * info.hight);
 
 	// initialise a vector to set the sprite possition
 	// 0, 0 for the first sprite
 	sf::Vector2f f(0, 0);
 
 	// creates the grid 
-	for(int i = 1; i <= h*w ; i++ )
+	for(unsigned int i = 1; i <= grid.size() ; i++ )
 	{
-		grid[i-1] = Block(texture, f, false, scale);
+		grid[i-1] = Block(texture, f, false, info.scale);
 
-		// move each sprite 105 pixels each time
-		f.x += 105*scale;
+		// move each sprite Block::textSize pixels each time
+		f.x += Block::textSize*info.scale;
 
 		// move to next row in grid
-		if(i % w == 0)
+		if(i % info.width == 0)
 		{
 			f.x = 0;
-			f.y += 105*scale;
+			f.y += Block::textSize*info.scale;
 		}
 	}
 
-	// puts mines in random blocks
+	// puts mines in randomom blocks
     std::random_device r;
     std::default_random_engine e1(r());
-    std::uniform_int_distribution<int> uniform_dist(0, h*w);
+    std::uniform_int_distribution<int> uniform_dist(0, info.hight*info.width);
 
-	for(int i = 0; i < mines; i++)
+	for(int i = 0; i < info.mines; i++)
 	{
-		int rand = uniform_dist(e1);
+		int random = uniform_dist(e1);
 
-		grid[rand].mine = true;
+		grid[random].mine = true;
 
 		/*
-			fror my tests the next part of the method does not work.
+			from my tests the next part of the method does not work.
 			I will have to change it or better complete re do it.
 
 			It goes over the next line of a mine is at a corner of a grid
@@ -68,14 +64,14 @@ void Grid::resizeGrid(int h, int w, int mines, float s)
 
 		// updates the nearMines values to  the blocks that 
 		// are next to mines 
-		grid[rand+1].nearMines += 1;
-		grid[rand-1].nearMines += 1;
+		grid[random+1].nearMines += 1;
+		grid[random-1].nearMines += 1;
 
 		// should change the mines count value of block next to a mine 
-		for (int i = -1; i < 2; ++i)
+		for (int i = -1; i <= 1; ++i)
 		{
-			grid[rand+i+w].nearMines += 1;
-			grid[rand+i-w].nearMines += 1;
+			grid[random+i+info.width].nearMines += 1;
+			grid[random+i-info.width].nearMines += 1;
 		}
 	}
 }
@@ -85,7 +81,7 @@ int Grid::getGridSize()
 	return grid.size();
 }
 
-void Grid::mouseClick(sf::Vector2f t, bool& l)
+void Grid::mouseClick(sf::Vector2f t, bool l)
 {
 	/*
 		goes through the how grid reading the bounds of the sprite and
@@ -94,35 +90,50 @@ void Grid::mouseClick(sf::Vector2f t, bool& l)
 		once it has found an intersection it chnages the texture rect
 		accordingly.
 	*/
-	for (int i = 0; i < grid.size(); i++)
+	for (unsigned int i = 0; i < grid.size(); i++)
 	{
 		sf::FloatRect temp = grid[i].sprite.getGlobalBounds();
 		if(temp.contains(t))
 		{
+			grid[i].opened = true;
 			if(!grid[i].mine)
 			{		
 				// if there are mines near it it will change the texture rect
 				// to the according number	
 				if( grid[i].nearMines > 0 )
 				{
-					grid[i].setSpriteRect(sf::IntRect((grid[i].nearMines-1)*105, 0, 104, 104));
+					grid[i].setSpriteRect(sf::IntRect((grid[i].nearMines-1)*Block::textSize, 0, 104, 104));
 				}
 				// if there are no near mines it sets it to a blank block
 				else
 				{
-					grid[i].setSpriteRect(sf::IntRect(0, 105, 104, 104));
+					grid[i].setSpriteRect(sf::IntRect(0, Block::textSize, 104, 104));
 				}
 			}
 			else
 			{
 				// sets loosing condition and puts sprite rect to a mine
 				l = true;
-				grid[i].setSpriteRect(sf::IntRect(315, 105, 104, 104));
+				grid[i].setSpriteRect(sf::IntRect(315, Block::textSize, 104, 104));
 			}
 		}
 	}
 }
 
+void Grid::mouseRightClick(sf::Vector2f t)
+{
+	for (unsigned int i = 0; i < grid.size(); i++)
+	{
+		sf::FloatRect temp = grid[i].sprite.getGlobalBounds();
+		if(temp.contains(t))
+		{
+			if(!grid[i].opened)
+			{
+				grid[i].setSpriteRect(sf::IntRect(210, Block::textSize, 104, 104));
+			}
+		}
+	}
+}
 Grid::~Grid()
 {
 	grid.clear();

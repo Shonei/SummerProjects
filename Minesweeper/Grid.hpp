@@ -9,6 +9,7 @@
 
 #pragma once
 
+
 #include <SFML/Graphics.hpp>
 #include "vector"
 #include "Block.hpp"
@@ -17,21 +18,27 @@
 #include "random"
 #include "iostream"
 
+struct GridInfo
+{
+	std::string texture;
+	float scale;
+	int hight;
+	int width;
+	int mines;
+};
+
 class Grid
 {
 	public:
 		Grid();
-		Grid(float t = 1.0, 
-			 int h = 5,
-			 int w = 5, 
-			 int mines = 5, 
-			 std::string name = "");
+		Grid(GridInfo &info);
 		~Grid();
 		std::vector<Block> grid;
 		float scale = 1.0;
 		sf::Texture texture;
-		void resizeGrid(int h, int w,int mines, float scale); 
-		int getGridSize(); const
-		void mouseClick(sf::Vector2f t, bool& l);
+		void resizeGrid(GridInfo &info); 
+		int getGridSize(); 
+		void mouseClick(sf::Vector2f t, bool l);
+		void mouseRightClick(sf::Vector2f t);
 
 };
