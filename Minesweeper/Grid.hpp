@@ -17,6 +17,7 @@
 #include "ctime"
 #include "random"
 #include "iostream"
+#include "cmath"
 
 struct GridInfo
 {
@@ -33,6 +34,8 @@ class Grid
 		Grid();
 		Grid(GridInfo &info);
 		~Grid();
+		int width;
+		int hight;
 		std::vector<Block> grid;
 		float scale = 1.0;
 		sf::Texture texture;
@@ -40,6 +43,9 @@ class Grid
 		int getGridSize(); 
 		void mouseClick(sf::Vector2f t, bool l);
 		void mouseRightClick(sf::Vector2f t);
+		void revealGrid(Block &cell, int i);
+		void changeSpriteTexture(Block &a);
+		bool shouldItReveal(Block &current, Block &prev, int curentIntex, int prevIndex);
 	private:
 		void putMines(GridInfo &info);
 		void thinkOfABetterName(int t, int random);

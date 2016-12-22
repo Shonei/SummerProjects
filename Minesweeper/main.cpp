@@ -2,11 +2,11 @@
 
 int main(int argc, char const *argv[])
 {
-	Game game(hight, width, 5);
+	Game game(hight, width, 20);
 
 	viewSize = game.getViewSize();
 
-	sf::RenderWindow window(sf::VideoMode(400, 600), "Minesweeper");
+	sf::RenderWindow window(sf::VideoMode(400, 600), "Minesweeper", sf::Style::Close);
 
 	window.setKeyRepeatEnabled(false);
 	window.setFramerateLimit(30);

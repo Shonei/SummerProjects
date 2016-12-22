@@ -22,5 +22,6 @@ bool loose = false;
 sf::View view;
 GridInfo gridInfo;
 sf::Vector2f viewSize;
-int hight = 6;
-int width = 6;
+int hight = 20;
+int width = 20;
+
