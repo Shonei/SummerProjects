@@ -210,7 +210,7 @@ void Grid::revealGrid(Block &cell, int i)
 		
 	if(shouldItReveal(grid[i], grid[i-width], i, i-width))
 	{
-		revealGrid(grid[i-width], i+width);
+		revealGrid(grid[i-width], i-width);
 	}
 }
 
