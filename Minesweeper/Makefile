@@ -4,7 +4,7 @@
 EXE_DIR = .
 EXE = $(EXE_DIR)/main
 
-SRC= Block.cpp main.cpp Grid.cpp Game.cpp
+SRC= Block.cpp main.cpp Grid.cpp Game.cpp OptionsMenu.cpp 
 
 # generic build details
 
@@ -33,8 +33,11 @@ clean:
 
 # dependencies
 
-main.o: main.hpp
+main.o: main.hpp main.cpp
 Game.o: Game.cpp Game.hpp
 Grid.o: Grid.cpp Grid.hpp
 Block.o: Block.hpp Block.cpp
+OptionsMenu.o: OptionsMenu.cpp OptionsMenu.hpp SingleOption.hpp
+
+
 

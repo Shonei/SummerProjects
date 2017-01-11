@@ -41,7 +41,7 @@ class Grid
 		sf::Texture texture;
 		void resizeGrid(GridInfo &info); 
 		int getGridSize(); 
-		void mouseClick(sf::Vector2f t, bool l);
+		void mouseClick(sf::Vector2f t, bool &l);
 		void mouseRightClick(sf::Vector2f t);
 		void revealGrid(Block &cell, int i);
 		void changeSpriteTexture(Block &a);

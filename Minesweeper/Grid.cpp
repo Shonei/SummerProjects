@@ -54,7 +54,7 @@ int Grid::getGridSize()
 	return grid.size();
 }
 
-void Grid::mouseClick(sf::Vector2f t, bool l)
+void Grid::mouseClick(sf::Vector2f t, bool &l)
 {
 	/*
 		goes through the how grid reading the bounds of the sprite and
@@ -269,24 +269,6 @@ bool Grid::shouldItReveal(Block &prev, Block &current, int prevIndex, int curren
 	{
 		return false;
 	}
-
-	// // checks if cells are on the same roll
-	// if(abs(prevIndex - curentIntex) > 1)
-	// {
-	// 	if(abs(curentIntex - prevIndex) != width)
-	// 	{
-	// 		return false;
-	// 	}
-	// }
-	
-	// // chacks if cells are on the same column
-	// else if(abs(prevIndex - curentIntex) == 1)
-	// {
-	// 	if(floor(curentIntex / width) != floor(prevIndex / width)) 
-	// 	{
-	// 		return false;
-	// 	}
-	// }
 
 	return true;
 }

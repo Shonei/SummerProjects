@@ -2,7 +2,9 @@
 
 int main(int argc, char const *argv[])
 {
-	Game game(hight, width, 20);
+	// OptionsMenu *optionsMenu = new OptionsMenu();	
+
+	Game game(hight, width, mines);
 
 	viewSize = game.getViewSize();
 
@@ -28,8 +30,40 @@ int main(int argc, char const *argv[])
 	        {
 	        	window.close();
 	        }
+	        if(!game.loose)
+	        {
+	        	game.eventHandler(event);
+	        	if(game.gameEnd())
+	        	{
+	        		/*
+	        			Use for win condition
+	        			Move outside the event loop
+	        			Give the player a reward
+	        		*/
+	        	}
+	        }
+	        else
+	        {
+	        	if(event.type == sf::Event::KeyPressed)
+	        	{
+	        		if(event.key.code == sf::Keyboard::R)
+	        		{
+	        			game.restartGame();
+	        			viewSize = game.getViewSize();
 
-	        game.eventHandler(event);
+	        			view.reset(sf::FloatRect(0, 0, viewSize.x, viewSize.y));
+    					window.setSize(sf::Vector2u(viewSize.x, viewSize.y));
+
+    					window.setView(view);
+
+    					game.loose = false;
+	        		}
+	        		else if(event.key.code == sf::Keyboard::Escape)
+	        		{
+
+	        		}
+	        	}
+	        }
 	    }
 
 	    //handels screen rendering dont mess with for now
@@ -37,7 +71,7 @@ int main(int argc, char const *argv[])
 	    window.clear(sf::Color(0, 0, 0, 255));
 
 	   	game.draw(window);
-
+	   	// optionsMenu->draw(window);
 		window.display();
 
     }

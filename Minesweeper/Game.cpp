@@ -7,6 +7,7 @@ Game::Game(int h, int w, int m)
 	gridInfo.hight = h;
 	gridInfo.width = w;
 	gridInfo.mines = m;
+	loose = false;
 
 	grid = new Grid(gridInfo);
 }
@@ -43,6 +44,24 @@ sf::Vector2f Game::getViewSize() const
 	temp.y = gridInfo.hight*Block::textSize*gridInfo.scale;
 
 	return temp;
+}
+
+void Game::restartGame()
+{
+	grid->resizeGrid(gridInfo);
+}
+
+bool Game::gameEnd()
+{
+	for(Block i: grid->grid)
+	{
+		if(!i.mine && !i.opened)
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 Game::~Game()

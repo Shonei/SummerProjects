@@ -11,6 +11,8 @@ public:
 	void eventHandler(const sf::Event &event);
 	void draw(sf::RenderWindow &window) const; 
 	bool gameLoose() const;
+	void restartGame();
+	bool gameEnd();
 	sf::Vector2f getViewSize() const;
 	Grid *grid;
 	GridInfo gridInfo;
