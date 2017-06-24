@@ -1,9 +1,9 @@
 #include "main.hpp"
 
-int main(int argc, char const *argv[])
-{
-	// OptionsMenu *optionsMenu = new OptionsMenu();	
+bool optionsActive = false;
 
+int main(int argc, char const *argv[])
+{	
 	Game game(hight, width, mines);
 
 	viewSize = game.getViewSize();
@@ -25,12 +25,50 @@ int main(int argc, char const *argv[])
 	    sf::Event event;
 	    while (window.pollEvent(event))
 	    {
-	        // Request for closing the window
+
 	        if (event.type == sf::Event::Closed)
 	        {
 	        	window.close();
 	        }
-	        if(!game.loose)
+	        
+	        if(event.type == sf::Event::KeyPressed)
+	       	{
+	       		if(event.key.code == sf::Keyboard::R)
+	       		{
+	       			game.restartGame();
+    				game.loose = false;
+        		}
+	        	else if(event.key.code == sf::Keyboard::Escape)
+	        	{
+				   	optionsActive = !optionsActive;
+
+				   	if(!optionsActive)
+				   	{
+				   		sf::Vector3f temp = options.getSettings();
+
+				   		if(temp.x < 0 || temp.y < 0)
+				   		{
+				   			break;
+				   		}
+
+				   		game.gridInfo.hight = temp.y;
+				   		game.gridInfo.width = temp.x; 
+				   		game.loose = false;
+
+				   		
+						viewSize = game.getViewSize();
+
+					    view.reset(sf::FloatRect(0, 0, viewSize.x, viewSize.y));
+					    window.setSize(sf::Vector2u(viewSize.x, viewSize.y));
+
+					    window.setView(view);
+
+				   		game.restartGame();
+				   	}
+        		} 
+	       	}
+	        
+	        if(!game.loose && !optionsActive)
 	        {
 	        	game.eventHandler(event);
 	        	if(game.gameEnd())
@@ -42,80 +80,26 @@ int main(int argc, char const *argv[])
 	        		*/
 	        	}
 	        }
-	        else
+	        else if (optionsActive)
 	        {
-	        	if(event.type == sf::Event::KeyPressed)
-	        	{
-	        		if(event.key.code == sf::Keyboard::R)
-	        		{
-	        			game.restartGame();
-	        			viewSize = game.getViewSize();
-
-	        			view.reset(sf::FloatRect(0, 0, viewSize.x, viewSize.y));
-    					window.setSize(sf::Vector2u(viewSize.x, viewSize.y));
-
-    					window.setView(view);
-
-    					game.loose = false;
-	        		}
-	        		else if(event.key.code == sf::Keyboard::Escape)
-	        		{
-
-	        		}
-	        	}
+	        	options.handleEvent(event);
 	        }
+
 	    }
 
-	    //handels screen rendering dont mess with for now
-	    // set backgound colour 
-	    window.clear(sf::Color(0, 0, 0, 255));
+		window.clear(sf::Color(0, 0, 0, 255));
+	    
+	    if(optionsActive){
+			options.draw(window);
+	    	
+	    } else 
+	    {
+	  	   	game.draw(window);
+	    }
 
-	   	game.draw(window);
-	   	// optionsMenu->draw(window);
 		window.display();
-
     }
 
 	return 0;
 }
 
-// you will need it later trust me
-// if (event.type == sf::Event::Resized)
-
-// void loosingLoop(sf::RenderWindow& window)
-// {
-	
-// 	std::string name[5] = {"images/0.jpg",
-// 						"images/1.png",
-// 						"images/2.png",
-// 						"images/3.jpg",
-// 						"images/4.png"};
-
-// 	std::vector<sf::Sprite> looseV;
-// 	std::vector<sf::Texture> looseT;
-// 	looseT.resize(5);
-// 	looseV.resize(5);
-
-
-// 	for (int i = 0; i <= 4; ++i)
-// 	{
-// 		looseT[i].loadFromFile(name[i]);
-// 		looseV[i].setTexture(looseT[i]);
-// 		looseV[i].setScale(
-// 							6*Block.textSize*0.2 / looseV[i].getGlobalBounds().width,
-// 							6*Block.textSize*0.2 / looseV[i].getGlobalBounds().height);
-// 	}
-
-// 	for (int i = 0; i <= 4; ++i)
-// 	{
-// 		window.clear(sf::Color(0, 0, 0, 255));
-// 		window.draw(looseV[i]);
-// 		window.display();
-// 		sf::sleep(sf::seconds(2));
-// 	}
-
-//     looseV.clear();
-//     looseT.clear();
-
-// 	window.close();
-// }

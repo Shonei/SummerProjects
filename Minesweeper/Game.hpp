@@ -14,7 +14,7 @@ public:
 	void restartGame();
 	bool gameEnd();
 	sf::Vector2f getViewSize() const;
-	Grid *grid;
+	Grid grid;
 	GridInfo gridInfo;
 	bool loose;
 	

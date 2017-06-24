@@ -1,7 +1,5 @@
-#include "Block.hpp"
-#include "Grid.hpp"
-#include "Game.hpp"
 #include "OptionsMenu.hpp"
+#include "Game.hpp"
 #include "vector"
 #include "iostream"
 #include "string"
@@ -12,7 +10,8 @@ bool loose = false;
 sf::View view;
 GridInfo gridInfo;
 sf::Vector2f viewSize;
-int hight = 20;
-int width = 20;
-int mines = 10;
+OptionsMenu options;
+int hight = 10;
+int width = 10;
+int mines = 5;
 

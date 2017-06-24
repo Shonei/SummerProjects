@@ -9,31 +9,31 @@ Game::Game(int h, int w, int m)
 	gridInfo.mines = m;
 	loose = false;
 
-	grid = new Grid(gridInfo);
+	grid.setValues(gridInfo);
 }
 
 void Game::eventHandler(const sf::Event &event)
 {
 	if (event.type == sf::Event::MouseButtonPressed)
-	        {
-	        	if (event.mouseButton.button == sf::Mouse::Left)
-	        	{
-	        		grid->mouseClick(sf::Vector2f(event.mouseButton.x,
-	        									 event.mouseButton.y), loose);
-	        	}
-	        	else if(event.mouseButton.button == sf::Mouse::Right)
-	        	{
-	        		grid->mouseRightClick(sf::Vector2f(event.mouseButton.x,
-	        									 event.mouseButton.y));
-	        	}
-	        }
+	{
+	  	if (event.mouseButton.button == sf::Mouse::Left)
+	   	{
+	   		grid.mouseClick(sf::Vector2f(event.mouseButton.x,
+	   									 event.mouseButton.y), loose);
+	   	}
+	   	else if(event.mouseButton.button == sf::Mouse::Right)
+	   	{
+	   		grid.mouseRightClick(sf::Vector2f(event.mouseButton.x,
+	      									 event.mouseButton.y));
+	       	}
+	    }
 }
 
 void Game::draw(sf::RenderWindow &window) const
 {
-	for(int i = 0; i < grid->getGridSize(); i++ )
+	for(int i = 0; i < grid.getGridSize(); i++ )
 	{
-		window.draw(grid->grid[i].sprite);
+		window.draw(grid.grid[i].sprite);
 	}
 }
 
@@ -48,12 +48,12 @@ sf::Vector2f Game::getViewSize() const
 
 void Game::restartGame()
 {
-	grid->resizeGrid(gridInfo);
+	grid.resizeGrid(gridInfo);
 }
 
 bool Game::gameEnd()
 {
-	for(Block i: grid->grid)
+	for(Block i: grid.grid)
 	{
 		if(!i.mine && !i.opened)
 		{
@@ -66,5 +66,5 @@ bool Game::gameEnd()
 
 Game::~Game()
 {
-	delete grid;
+	// delete grid;
 }

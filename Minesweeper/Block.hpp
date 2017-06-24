@@ -6,11 +6,11 @@
     the sprite easier.
 */
 
-
-
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
+#define print(a) std::cout << a << std::endl
 
 class Block
 {

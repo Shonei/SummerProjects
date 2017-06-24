@@ -32,22 +32,23 @@ class Grid
 {
 	public:
 		Grid();
-		Grid(GridInfo &info);
 		~Grid();
 		int width;
 		int hight;
 		std::vector<Block> grid;
 		float scale = 1.0;
 		sf::Texture texture;
+		void setValues(GridInfo &info);
 		void resizeGrid(GridInfo &info); 
-		int getGridSize(); 
+		int getGridSize() const; 
 		void mouseClick(sf::Vector2f t, bool &l);
 		void mouseRightClick(sf::Vector2f t);
 		void revealGrid(Block &cell, int i);
 		void changeSpriteTexture(Block &a);
 		bool shouldItReveal(Block &current, Block &prev, int curentIntex, int prevIndex);
+		void operator=(const Grid& g);
 	private:
+		int spriteSize;
 		void putMines(GridInfo &info);
-		void thinkOfABetterName(int t, int random);
 
 };

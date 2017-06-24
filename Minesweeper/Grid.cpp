@@ -1,9 +1,18 @@
 #include "Grid.hpp"
 
-Grid::Grid(GridInfo &info)
+Grid::Grid()
 {
-	width = info.width;
-	hight = info.hight;
+	width = 6;
+	hight = 6;
+
+	spriteSize = Block::textSize * 0.2;
+
+	scale = 0.2;
+}
+
+void Grid::setValues(GridInfo &info)
+{
+	spriteSize = Block::textSize * info.scale;
 
 	scale = info.scale;
 	if(!texture.loadFromFile(info.texture))
@@ -18,68 +27,61 @@ Grid::Grid(GridInfo &info)
 
 void Grid::resizeGrid(GridInfo &info)
 {
+	width = info.width;
+	hight = info.hight;
 	scale  = info.scale;
 
-	// clear grid to be sure and set the new size
 	grid.clear();
 
-	// set new size according to the height and width 
 	grid.resize(info.width * info.hight);
 
-	// initialise a vector to set the sprite possition
-	// 0, 0 for the first sprite
-	sf::Vector2f f(0, 0);
+	sf::Vector2f blockPossition(0, 0);
 
 	// creates the grid 
 	for(unsigned int i = 1; i <= grid.size() ; i++ )
 	{
-		grid[i-1] = Block(texture, f, false, info.scale);
+		grid[i-1] = Block(texture, blockPossition, false, info.scale);
 
 		// move each sprite Block::textSize pixels each time
-		f.x += Block::textSize*info.scale;
+		blockPossition.x += Block::textSize*info.scale;
 
 		// move to next row in grid
 		if(i % info.width == 0)
 		{
-			f.x = 0;
-			f.y += Block::textSize*info.scale;
+			blockPossition.x = 0;
+			blockPossition.y += Block::textSize*info.scale;
 		}
 	}
 
 	putMines(info);
 }
 
-int Grid::getGridSize()
+int Grid::getGridSize() const
 {
 	return grid.size();
 }
 
 void Grid::mouseClick(sf::Vector2f t, bool &l)
 {
-	/*
-		goes through the how grid reading the bounds of the sprite and
-		then checkes if the mouse click intersects any on them.
+	int i = (floor(t.y / spriteSize) * width) + floor(t.x / spriteSize);
 
-		once it has found an intersection it chnages the texture rect
-		accordingly.
-	*/
-	for (unsigned int i = 0; i < grid.size(); i++)
+	sf::FloatRect temp = grid[i].sprite.getGlobalBounds();
+	// print(temp.left);
+	// print(temp.top);
+	if(temp.contains(t))
 	{
-		sf::FloatRect temp = grid[i].sprite.getGlobalBounds();
-		if(temp.contains(t))
+		if(!grid[i].mine)
+		{		
+			revealGrid(grid[i], i);
+		}
+		else
 		{
-			if(!grid[i].mine)
-			{		
-				revealGrid(grid[i], i);
-			}
-			else
-			{
-				// sets loosing condition and puts sprite rect to a mine
-				l = true;
-				grid[i].setSpriteRect(sf::IntRect(315, Block::textSize, 104, 104));
-			}
+			// sets loosing condition and puts sprite rect to a mine
+			l = true;
+			grid[i].setSpriteRect(sf::IntRect(315, Block::textSize, 104, 104));
 		}
 	}
+
 }
 
 void Grid::mouseRightClick(sf::Vector2f t)
@@ -96,6 +98,7 @@ void Grid::mouseRightClick(sf::Vector2f t)
 		}
 	}
 }
+
 Grid::~Grid()
 {
 	grid.clear();
@@ -115,78 +118,27 @@ void Grid::putMines(GridInfo &info)
 		{
 			grid[random].mine = true;
 
-			/*
-				from my tests the next part of the method does not work.
-				I will have to change it or better complete re do it.
+			int row = floor(random / hight);
+			int column = random % width;
 
-				It goes over the next line of a mine is at a corner of a grid
-				same problem for the future reveal grid function
-			*/
-
-			if(random < info.width)
+			for (int i = row - 1; i <= row + 1; ++i)
 			{
-				grid[random+info.width].nearMines += 1;
-				
-				thinkOfABetterName(info.width, random);
-			}
-			else if(random > (int)grid.size()-info.width)
-			{
-				grid[random-info.width].nearMines += 1;
+				for (int j = column - 1; j <= column + 1; ++j)
+					{
+						unsigned int index = i * width + j;
 
-				thinkOfABetterName(-info.width, random);
-			}
-			else
-			{
-				int temp = 0;
-				grid[random+info.width].nearMines += 1;
-				grid[random-info.width].nearMines += 1;
+						if( index > 0 &&
+							index < grid.size() &&
+							floor(index / width) == i) 
+						{
 
-				if(random % info.width == 0)
-				{
-					temp = 1;
-				}
-				else if((random+1) % info.width == 0)
-				{
-					temp = -1;
-				}	
-				else
-				{			
-					temp = 1;
-					grid[random-1].nearMines += 1;
-					grid[random-info.width-1].nearMines += 1;
-					grid[random+info.width-1].nearMines += 1;
-				}
-
-				grid[random+temp].nearMines += 1;
-				grid[random+info.width+temp].nearMines += 1;
-				grid[random-info.width+temp].nearMines += 1;
-
+							grid[index].nearMines += 1;
+							// std::cout << index << width << row << std::endl;
+						}
+					}	
 			}
 		}
 	}	
-}
-
-void Grid::thinkOfABetterName(int t, int random)
-{
-	if((random % t) == 0)
-	{
-		grid[random+1].nearMines += 1;
-		grid[random+t+1].nearMines += 1;
-	}
-	
-	if((random+1) % t == 0)
-	{
-		grid[random-1].nearMines += 1;
-		grid[random+t-1].nearMines += 1;
-	}
-	
-	if(((random % t) != 0) && ((random+1 % t) != 0))
-	{
-		grid[random+1].nearMines += 1;
-		grid[random+t+1].nearMines += 1;
-		grid[random-1].nearMines += 1;
-		grid[random+t-1].nearMines += 1;
-	}
 }
 
 void Grid::revealGrid(Block &cell, int i)
@@ -218,14 +170,11 @@ void Grid::revealGrid(Block &cell, int i)
 void Grid::changeSpriteTexture(Block &a)
 {	
 	a.opened = true;
-
-	// if there are mines near it it will change the texture rect
-	// to the according number	
+	
 	if( a.nearMines > 0 )
 	{
 		a.setSpriteRect(sf::IntRect((a.nearMines-1)*Block::textSize, 0, 104, 104));
 	}
-	// if there are no near mines it sets it to a blank block
 	else
 	{
 		a.setSpriteRect(sf::IntRect(0, Block::textSize, 104, 104));
