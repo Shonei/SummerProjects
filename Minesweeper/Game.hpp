@@ -5,17 +5,18 @@
 
 class Game
 {
-public:
-	Game(int h, int w, int m);
-	~Game();
-	void eventHandler(const sf::Event &event);
-	void draw(sf::RenderWindow &window) const; 
-	bool gameLoose() const;
-	void restartGame();
-	bool gameEnd();
-	sf::Vector2f getViewSize() const;
-	Grid grid;
-	GridInfo gridInfo;
-	bool loose;
-	
+	public:
+		sf::Vector2f getViewSize() const;
+		bool loose;
+		Game(int h, int w, int m);
+		void eventHandler(const sf::Event &event);
+		void draw(sf::RenderWindow &window) const; 
+		bool gameLoose() const;
+		void restartGame();
+		void updateGrid(float w, float h, float m);
+		bool gameEnd();
+	private:
+		Grid grid;
+		GridInfo gridInfo;
+
 };

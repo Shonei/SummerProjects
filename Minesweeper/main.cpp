@@ -41,6 +41,7 @@ int main(int argc, char const *argv[])
 	        	else if(event.key.code == sf::Keyboard::Escape)
 	        	{
 				   	optionsActive = !optionsActive;
+				   	options.setPosition(window.getSize().x, window.getSize().y);
 
 				   	if(!optionsActive)
 				   	{
@@ -50,11 +51,10 @@ int main(int argc, char const *argv[])
 				   		{
 				   			break;
 				   		}
+				   		print(temp.z);
+				   		game.updateGrid(temp.x, temp.y, temp.z);
 
-				   		game.gridInfo.hight = temp.y;
-				   		game.gridInfo.width = temp.x; 
 				   		game.loose = false;
-
 				   		
 						viewSize = game.getViewSize();
 

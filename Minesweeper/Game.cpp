@@ -64,7 +64,9 @@ bool Game::gameEnd()
 	return true;
 }
 
-Game::~Game()
+void Game::updateGrid(float w, float h, float m)
 {
-	// delete grid;
+	gridInfo.width = w;
+	gridInfo.hight = h;
+	gridInfo.mines = m;
 }

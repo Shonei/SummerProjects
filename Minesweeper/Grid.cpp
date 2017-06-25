@@ -33,23 +33,23 @@ void Grid::resizeGrid(GridInfo &info)
 
 	grid.clear();
 
-	grid.resize(info.width * info.hight);
+	grid.resize(width * hight);
 
 	sf::Vector2f blockPossition(0, 0);
 
 	// creates the grid 
 	for(unsigned int i = 1; i <= grid.size() ; i++ )
 	{
-		grid[i-1] = Block(texture, blockPossition, false, info.scale);
+		grid[i-1] = Block(texture, blockPossition, false, scale);
 
 		// move each sprite Block::textSize pixels each time
-		blockPossition.x += Block::textSize*info.scale;
+		blockPossition.x += Block::textSize*scale;
 
 		// move to next row in grid
-		if(i % info.width == 0)
+		if(i % width == 0)
 		{
 			blockPossition.x = 0;
-			blockPossition.y += Block::textSize*info.scale;
+			blockPossition.y += Block::textSize*scale;
 		}
 	}
 
@@ -111,7 +111,8 @@ void Grid::putMines(GridInfo &info)
     std::default_random_engine e1(r());
     std::uniform_int_distribution<int> uniform_dist(0, info.hight*info.width);
 
-	for(int i = 0; i < info.mines; i++)
+    int i = 0;
+	while(i < info.mines)
 	{
 		int random = uniform_dist(e1);
 		if(!grid[random].mine)
@@ -131,12 +132,11 @@ void Grid::putMines(GridInfo &info)
 							index < grid.size() &&
 							floor(index / width) == i) 
 						{
-
 							grid[index].nearMines += 1;
-							// std::cout << index << width << row << std::endl;
 						}
 					}	
 			}
+		i++;
 		}
 	}	
 }
