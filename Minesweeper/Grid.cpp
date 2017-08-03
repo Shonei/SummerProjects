@@ -66,8 +66,7 @@ void Grid::mouseClick(sf::Vector2f t, bool &l)
 	int i = (floor(t.y / spriteSize) * width) + floor(t.x / spriteSize);
 
 	sf::FloatRect temp = grid[i].sprite.getGlobalBounds();
-	// print(temp.left);
-	// print(temp.top);
+
 	if(temp.contains(t))
 	{
 		if(!grid[i].mine)
@@ -109,7 +108,7 @@ void Grid::putMines(GridInfo &info)
 	// puts mines in randomom blocks
     std::random_device r;
     std::default_random_engine e1(r());
-    std::uniform_int_distribution<int> uniform_dist(0, info.hight*info.width);
+    std::uniform_int_distribution<int> uniform_dist(0, info.hight*info.width - 1);
 
     int i = 0;
 	while(i < info.mines)
@@ -119,7 +118,7 @@ void Grid::putMines(GridInfo &info)
 		{
 			grid[random].mine = true;
 
-			int row = floor(random / hight);
+			int row = floor(random / width);
 			int column = random % width;
 
 			for (int i = row - 1; i <= row + 1; ++i)

@@ -41,10 +41,26 @@ void InputBox::remove()
 
 int InputBox::getVal() const
 {
-	return atoi(val.c_str());
+	return (int)atoi(val.c_str());
 }
 
 void InputBox::draw(sf::RenderWindow& window)
 {
 	window.draw(text);
+}
+
+sf::FloatRect InputBox::getGlobalBounds()const
+{
+	return text.getGlobalBounds();
+}
+
+int InputBox::size() const
+{
+	return val.size();
+}
+
+void InputBox::reset()
+{
+	val = "";
+	text.setString("");
 }

@@ -5,21 +5,19 @@
 #include "string"
 #include "Option.hpp"
 #include "InputBox.hpp"
+#include "InputOption.hpp"
 
 class OptionsMenu
 {
 	public:
 		OptionsMenu();
-		~OptionsMenu();
 		void draw(sf::RenderWindow& window);
-		void handleEvent(sf::Event event);
+		void handleEvent(const sf::Event& event);
 		sf::Vector3f getSettings();
 		void setInitialValues();
 		void setPosition(int x, int y);
 	private:
-		InputBox input1;
-		InputBox input2;
-		InputBox input3;
+		InputOption input;
 		sf::Font font;		
 		std::vector<Option> option;
 		sf::Vector3f returnValue;

@@ -11,7 +11,7 @@ sf::View view;
 GridInfo gridInfo;
 sf::Vector2f viewSize;
 OptionsMenu options;
-int hight = 10;
+int hight = 5;
 int width = 10;
 int mines = 5;
 
