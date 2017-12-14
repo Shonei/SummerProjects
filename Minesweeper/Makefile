@@ -10,8 +10,8 @@ SRC= Block.cpp main.cpp Grid.cpp Game.cpp OptionsMenu.cpp Option.cpp InputBox.cp
 
 CXX=      g++
 COPT=    -O
-CXXFLAGS=  -g -Wall -std=c++11
-LOADLIBES=  -lsfml-graphics -lsfml-window -lsfml-system -lstdc++
+CXXFLAGS=  -g -Wall -std=c++11 -DSFML_STATIC
+LOADLIBES=  -DSFML_STATIC -lsfml-graphics -lsfml-window -lsfml-system -lstdc++
 #-Wpedantic - too much C++ comment style errors
 
 # compile to  object code

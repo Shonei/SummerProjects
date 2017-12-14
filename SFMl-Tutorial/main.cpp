@@ -7,12 +7,9 @@ using namespace std;
 
 int main()
 {
-    Game game;
-    while(game.gameOn())
-    {
-        game.somethingHappened();
-        game.render();
-    }
+    // define a 120x50 rectangle
+    sf::RectangleShape rectangle(sf::Vector2f(120, 50));
 
-    return 0;
+    // change the size to 100x100
+    rectangle.setSize(sf::Vector2f(100, 100));
 }
