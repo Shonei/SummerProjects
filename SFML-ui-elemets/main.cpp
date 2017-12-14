@@ -5,12 +5,13 @@
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(300, 500), "Too Deep");
-  Button button(sf::Vector2f(500, 20));
+  Button button(sf::Vector2f(500, 20), "hello it is me");
   button.setPosition(sf::Vector2f(100, 100));
   button.setClickAction([]() { std::cout << "click" << std::endl; });
 
   button.setPosition(sf::Vector2f(10, 300));
   button.setSize(sf::Vector2f(50, 20));
+  button.setText("Click!");
 
   while (window.isOpen()) {
     sf::Event event;

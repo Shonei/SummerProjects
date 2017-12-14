@@ -73,3 +73,7 @@ void RoundedRec::setSize(const sf::Vector2f v) {
   // this->calculateCircle();
   this->update();
 }
+
+sf::Vector2f RoundedRec::getSize() const {
+  return size;
+}

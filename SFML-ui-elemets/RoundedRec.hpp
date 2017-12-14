@@ -15,6 +15,7 @@ class RoundedRec : public sf::Shape {
   void setRadius(int);
   int getRadius() const;
   void setSize(const sf::Vector2f);
+  sf::Vector2f getSize() const;
 
  private:
   void calculateCircle();
