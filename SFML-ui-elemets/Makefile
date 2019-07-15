@@ -31,6 +31,9 @@ $(EXE): $(OBJ)
 clean:
 	rm -f $(OBJ) $(EXE)
 
+run:
+	./main
+
 # dependencies
 main.o:	main.cpp 
 Button.o: Button.cpp Button.hpp

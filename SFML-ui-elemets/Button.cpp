@@ -1,4 +1,5 @@
-#include "Button.hpp"
+#include <SFML/Graphics.hpp>
+#include "BUtton.hpp"
 
 Button::Button(const sf::Vector2f v) {
   outher.setFillColor(sf::Color(105, 105, 105));
@@ -13,7 +14,7 @@ Button::Button(const sf::Vector2f v) {
 
   text.setFont(font);
   text.setCharacterSize(11);
-  text.setColor(sf::Color(40, 40, 40));
+  text.setFillColor(sf::Color(40, 40, 40));
   text.setString("Button");
 }
 
@@ -30,7 +31,7 @@ Button::Button(const sf::Vector2f v, const std::string s) {
 
   text.setFont(font);
   text.setCharacterSize(11);
-  text.setColor(sf::Color(40, 40, 40));
+  text.setFillColor(sf::Color(40, 40, 40));
   text.setString(s);
   this->resizeButtonToText();
 }
@@ -66,33 +67,31 @@ void Button::event(const sf::Event &event) {
   sf::FloatRect temp = outher.getGlobalBounds();
 
   if (event.type == sf::Event::MouseMoved) {
-    if (temp.contains(sf::Vector2f(event.mouseMove.x, event.mouseMove.y)) &&
-        hover) {
+    if (temp.contains(sf::Vector2f(event.mouseMove.x, event.mouseMove.y)) && hover) {
       hover = false;
       outher.setFillColor(sf::Color(128, 128, 128));
-      text.setColor(sf::Color(88, 88, 88));
+      text.setFillColor(sf::Color(88, 88, 88));
       hoverAction();
-    } else if (!temp.contains(
-                   sf::Vector2f(event.mouseMove.x, event.mouseMove.y))) {
+    } else if (!temp.contains( sf::Vector2f(event.mouseMove.x, event.mouseMove.y))) {
       hover = true;
       outher.setFillColor(sf::Color(105, 105, 105));
-      text.setColor(sf::Color(40, 40, 40));
+      text.setFillColor(sf::Color(40, 40, 40));
     }
+    return;
   }
 
   if (event.type == sf::Event::MouseButtonPressed) {
-    if (temp.contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) &&
-        click) {
+    if (temp.contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) && click) {
       clickAction();
       outher.setFillColor(sf::Color(112, 112, 160));
-      text.setColor(sf::Color(72, 72, 120));
+      text.setFillColor(sf::Color(72, 72, 120));
       click = false;
     }
   } else if (event.type == sf::Event::MouseButtonReleased) {
     if (temp.contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
       click = true;
       outher.setFillColor(sf::Color(105, 105, 105));
-      text.setColor(sf::Color(40, 40, 40));
+      text.setFillColor(sf::Color(40, 40, 40));
     }
   }
 }
